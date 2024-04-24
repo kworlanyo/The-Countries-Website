@@ -19,9 +19,12 @@ function DataContextProvider({ children }) {
         const response = await fetch("https://restcountries.com/v3.1/all");
         if (response.ok) {
           const info = await response.json();
-          const countryNames = info
+
+          let countryNames = info
             .map((country) => country.name.common)
-            .sort();
+            .sort()
+            .filter((countryName) => countryName !== "Antarctica");
+
           setData(countryNames);
           setIsLoading(false);
           setError("");
@@ -40,10 +43,7 @@ function DataContextProvider({ children }) {
     async function fetchData() {
       try {
         if (countryName.length > 0) {
-          const url = `https://restcountries.com/v3.1/name/${countryName
-            .split(". ")
-            .slice(1)
-            .join(" ")}?fullText=true`;
+          const url = `https://restcountries.com/v3.1/name/${countryName.split(". ").slice(1).join(" ")}?fullText=true`;
 
           const response = await fetch(url);
 
@@ -67,9 +67,7 @@ function DataContextProvider({ children }) {
 
   const handleSearch = async () => {
     try {
-      const response = await fetch(
-        `https://restcountries.com/v3.1/name/${input}`
-      );
+      const response = await fetch(`https://restcountries.com/v3.1/name/${input}`);
 
       if (response.ok) {
         const data2 = await response.json();
