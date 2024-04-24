@@ -23,7 +23,13 @@ function DataContextProvider({ children }) {
           let countryNames = info
             .map((country) => country.name.common)
             .sort()
-            .filter((countryName) => countryName !== "Antarctica");
+            .filter(
+              (countryName) =>
+                countryName !== "Antarctica" &&
+                countryName !== "Bouvet Island" &&
+                countryName !== "Heard Island and McDonald Islands" &&
+                countryName !== "Macau"
+            );
 
           setData(countryNames);
           setIsLoading(false);
